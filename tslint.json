@@ -1,0 +1,7 @@
+{
+  "extends": "gts/tslint.json",
+  "rules": {
+    "no-any": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
+  }
+}
