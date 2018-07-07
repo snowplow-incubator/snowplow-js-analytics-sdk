@@ -1,10 +1,8 @@
 # Snowplow JavaScript and TypeScript Analytics SDK
 
 [![NPM](https://img.shields.io/npm/v/snowplow-analytics-sdk.svg)](https://www.npmjs.com/package/snowplow-analytics-sdk)
-[![Build Status](https://travis-ci.org/dokmic/snowplow-js-analytics-sdk.svg?branch=master)](https://travis-ci.org/dokmic/snowplow-js-analytics-sdk)
-[![Code Coverage](https://codecov.io/gh/dokmic/snowplow-js-analytics-sdk/badge.svg?branch=master)](https://codecov.io/gh/dokmic/snowplow-js-analytics-sdk?branch=master)
-
-*This is an unofficial Snowplow SDK for Node.JS but it's same to the official Python or Scala.*
+[![Build Status](https://travis-ci.org/snowplow-incubator/snowplow-js-analytics-sdk.svg?branch=master)](https://travis-ci.org/snowplow-incubator/snowplow-js-analytics-sdk)
+[![Code Coverage](https://codecov.io/gh/snowplow-incubator/snowplow-js-analytics-sdk/badge.svg?branch=master)](https://codecov.io/gh/snowplow-incubator/snowplow-js-analytics-sdk?branch=master)
 
 This JavaScript SDK provides an ability to work with [Snowplow enriched events](https://github.com/snowplow/snowplow/wiki/canonical-event-model) in your JavaScript or TypeScript event processing, data modeling, and machine-learning jobs. You can also use this SDK with [AWS Lambda](https://aws.amazon.com/lambda/).
 
