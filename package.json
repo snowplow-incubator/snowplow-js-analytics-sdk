@@ -27,16 +27,16 @@
     "node": ">=6.4.0"
   },
   "devDependencies": {
-    "@types/jest": "^23.0",
+    "@types/jest": "^24.0",
     "codecov": "^3.0",
     "dts-bundle": "^0.7",
-    "gts": "^0.6",
-    "jest": "^23.0",
+    "gts": "^1.0",
+    "jest": "^24.0",
     "js-beautify": "^1.0",
-    "ts-jest": "^22.0",
+    "ts-jest": "^24.0",
     "ts-loader": "^4.0",
     "tslint": "^5.0",
-    "typescript": "^2.0",
+    "typescript": "^3.0",
     "webpack": "^4.0",
     "webpack-cli": "^2.0"
   },
