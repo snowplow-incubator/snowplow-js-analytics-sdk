@@ -1,29 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "declaration": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "esModuleInterop": true,
     "lib": [
       "es6"
     ],
+    "module": "es6",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
-    "baseUrl": "./src",
-    "declarationDir": "."
+    "target": "es6"
   },
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  ],
   "typeRoots": [
     "node_modules/@types"
   ],
   "types": [
     "jest"
-  ],
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.test.ts"
   ]
 }
