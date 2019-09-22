@@ -19,11 +19,11 @@ npm install --save snowplow-analytics-sdk
 ## Usage
 In your `app.js`:
 ```javascript
-const transform = require('snowplow-analytics-sdk').transform;
+const { transform } = require('snowplow-analytics-sdk');
 
 module.exports.handler = input => {
   let event = transform(
-    new Buffer(input.Records[0].kinesis.data, 'base64').toString('utf8')
+    new Buffer(input.Records[0].kinesis.data, 'base64').toString('utf8'),
   );
 
   // ...
@@ -36,7 +36,7 @@ import { transform } from 'snowplow-analytics-sdk';
 
 export function handler(input: any) {
   let event = transform(
-    new Buffer(input.Records[0].kinesis.data, 'base64').toString('utf8')
+    new Buffer(input.Records[0].kinesis.data, 'base64').toString('utf8'),
   );
 
   // ...

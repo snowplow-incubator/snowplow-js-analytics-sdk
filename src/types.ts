@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2018 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2018-2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -10,20 +10,28 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-type Context = { schema: string, data: any };
-const SCHEMA_PATTERN = new RegExp(".+:([a-zA-Z0-9_\.]+)/([a-zA-Z0-9_\-]+)/[^/]+/(.*)");
+
+const SCHEMA_PATTERN = /.+:([a-zA-Z0-9_\.]+)\/([a-zA-Z0-9_\-]+)\/[^\/]+\/(.*)/;
+
+interface Context {
+  schema: string;
+  data: any;
+}
 
 /**
- * Elasticsearch field
+ * Elasticsearch field.
  */
-export type Field < Type = any > = { key: string, value: Type };
+export interface Field<Type = any> {
+  key: string;
+  value: Type;
+}
 
 /**
- * Create an Elasticsearch field name from a schema
+ * Create an Elasticsearch field name from a schema.
  *
- * @param prefix Prefix for the result name
- * @param schema Schema field from an incoming JSON
- * @return Elasticsearch field name
+ * @param prefix Prefix for the result name.
+ * @param schema Schema field from an incoming JSON.
+ * @return Elasticsearch field name.
  */
 function fixSchema(prefix: string, schema: string): string {
   const match = schema.match(SCHEMA_PATTERN);
@@ -32,44 +40,46 @@ function fixSchema(prefix: string, schema: string): string {
     throw new TypeError('Wrong schema format.');
   }
 
-  const snakeCaseOrganization = match[1].replace(/\./g, '_').toLowerCase(),
-    snakeCaseName = match[2].replace(/([^A-Z_])([A-Z])/g, '$1_$2').toLowerCase(),
-    model = match[3].split('-')[0];
+  const [, organization, name, version] = match;
+  const snakeCaseOrganization = organization.replace(/\./g, '_').toLowerCase();
+  const snakeCaseName = name.replace(/([^A-Z_])([A-Z])/g, '$1_$2').toLowerCase();
+  const [model] = version.split('-');
 
-  return ([prefix, snakeCaseOrganization, snakeCaseName, model]).join('_');
+  return [prefix, snakeCaseOrganization, snakeCaseName, model].join('_');
 }
 
 /**
- * Convert a contexts JSON to an Elasticsearch-compatible Object
+ * Convert a contexts JSON to an Elasticsearch-compatible Object.
  *
- * @param contexts List of inner custom context JSONs
- * @return List of validated tuples containing a fixed schema string and the original data Object
+ * @param contexts List of inner custom context JSONs.
+ * @return List of validated tuples containing a fixed schema string and the original data Object.
  */
 export function Contexts(key: string, contexts: string): Field[] {
   const distinctContexts = (JSON.parse(contexts).data as Context[])
-    .reduce((contexts, context) => {
-      const schema = fixSchema('contexts', context.schema);
+    .reduce(
+      (contexts, context) => {
+        const schema = fixSchema('contexts', context.schema);
 
-      if (!contexts[schema]) {
-        contexts[schema] = [context.data];
-      } else {
+        if (!contexts[schema]) {
+          contexts[schema] = [];
+        }
+
         contexts[schema].push(context.data);
-      }
 
-      return contexts;
-    }, {});
+        return contexts;
+      },
+      {},
+    );
 
-  return Object.keys(distinctContexts).map(key => Object({
-    key,
-    value: distinctContexts[key],
-  }));
+  return Object.keys(distinctContexts)
+    .map(key => ({ key, value: distinctContexts[key] }));
 }
 
 /**
- * Convert an unstructured event JSON to an Elasticsearch-compatible Object
+ * Convert an unstructured event JSON to an Elasticsearch-compatible Object.
  *
- * @param unstruct Unstructured event JSON
- * @return Unstructured event JSON in an Elasticsearch-compatible format
+ * @param unstruct Unstructured event JSON.
+ * @return Unstructured event JSON in an Elasticsearch-compatible format.
  */
 export function Unstruct(key: string, unstruct: string): Field[] {
   const context = JSON.parse(unstruct).data as Context;
@@ -80,52 +90,52 @@ export function Unstruct(key: string, unstruct: string): Field[] {
 
   return [{
     key: fixSchema('unstruct_event', context.schema),
-    value: context.data
+    value: context.data,
   }];
 }
 
-export function String(key: string, value: string): Array < Field < string >> {
+export function String(key: string, value: string): Field<string>[] {
   return [{ key, value }];
 }
 
-export function Integer(key: string, value: string): Array < Field < number >> {
-  const converted = Number.parseInt(value);
+export function Integer(key: string, value: string): Field<number>[] {
+  const converted = Number.parseInt(value, 10);
   if (Number.isNaN(converted)) {
-    throw new TypeError("Invalid value for field '" + key + "'.");
+    throw new TypeError(`Invalid value for field '${key}'.`);
   }
 
   return [{ key, value: converted }];
 }
 
-export function Double(key: string, value: string): Array < Field < number >> {
+export function Double(key: string, value: string): Field<number>[] {
   const converted = Number.parseFloat(value);
   if (Number.isNaN(converted)) {
-    throw new TypeError("Invalid value for field '" + key + "'.");
+    throw new TypeError(`Invalid value for field '${key}'.`);
   }
 
   return [{ key, value: converted }];
 }
 
 /**
- * Convert '0' to false and '1' to true
+ * Convert '0' to false and '1' to true.
  *
- * @param {string} key The field name
- * @param {string} value The field value - should be '0' or '1'
+ * @param key The field name.
+ * @param value The field value - should be '0' or '1'.
  */
-export function Boolean(key: string, value: string): Array < Field < boolean >> {
+export function Boolean(key: string, value: string): Field<boolean>[] {
   if ('0' !== value && '1' !== value) {
-    throw new TypeError("Invalid value for field '" + key + "'.");
+    throw new TypeError(`Invalid value for field '${key}'.`);
   }
 
   return [{ key, value: value === '1' }];
 }
 
 /**
- * Convert a string timestamp to numeric
+ * Convert a string timestamp to numeric.
  *
- * @param key The field name
- * @param value Timestamp of the form YYYY-MM-DD hh:mm:ss
+ * @param key The field name.
+ * @param value Timestamp of the form YYYY-MM-DD hh:mm:ss.
  */
-export function Timestamp(key: string, value: string): Array < Field < string >> {
-  return [{ key, value: value.replace(' ', 'T') + 'Z' }];
+export function Timestamp(key: string, value: string): Field<string>[] {
+  return [{ key, value: `${value.replace(' ', 'T')}Z` }];
 }
