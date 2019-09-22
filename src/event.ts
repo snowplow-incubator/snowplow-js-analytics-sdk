@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2018 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2018-2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -12,7 +12,7 @@
  */
 
 /**
- * Snowplow Good Event
+ * Snowplow Good Event.
  */
 export interface Event {
   app_id: string;
