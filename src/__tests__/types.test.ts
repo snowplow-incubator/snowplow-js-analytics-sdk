@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2018 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2018-2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 import * as Types from '../types';
 
 it('should parse string', () => {
@@ -38,7 +39,8 @@ it('should parse timestamp', () => {
 
 it('should parse contexts', () => {
   expect(Types.Contexts('', JSON.stringify({
-    data: [{
+    data: [
+      {
         data: { unique: true },
         schema: 'iglu:com.acme/unduplicated/jsonschema/1-0-0',
       },
@@ -49,21 +51,22 @@ it('should parse contexts', () => {
       {
         data: { value: 2 },
         schema: 'iglu:com.acme/duplicated/jsonschema/1-0-0',
-      }
+      },
     ],
     schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-0',
-  }))).toEqual([{
+  }))).toEqual([
+    {
       key: 'contexts_com_acme_unduplicated_1',
       value: [
         { unique: true },
-      ]
+      ],
     },
     {
       key: 'contexts_com_acme_duplicated_1',
       value: [
         { value: 1 },
         { value: 2 },
-      ]
+      ],
     },
   ]);
 });
@@ -78,7 +81,7 @@ it('should parse unstruct', () => {
   }))).toEqual([{
     key: 'unstruct_event_com_snowplowanalytics_snowplow_link_click_1',
     value: { key: 'value' },
-  }, ]);
+  }]);
 
   expect(() => Types.Unstruct('', JSON.stringify({
     schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
