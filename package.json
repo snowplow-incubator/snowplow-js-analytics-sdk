@@ -23,6 +23,7 @@
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "codecov": "codecov",
+    "lint": "tslint --project .",
     "test": "jest"
   },
   "engines": {
