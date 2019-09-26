@@ -11,14 +11,18 @@ install:
 script:
   - npm test
   - npm run lint
+  - npm run build
 
 after_script:
   - npm run codecov
 
 deploy:
+  edge: true
   provider: npm
-  email: publish@snowplowanalytics.com
-  api_key:
+  cleanup: false
+  api_token:
     secure: Gz1HXNJbhZs2tZyJS8+nAJqxW+q86ClGDpRM1Vew5q+TL2+ZTOKuhLQ5NKdCFyzQ1mQA5qh1ShMJsp4AforA5qI8XpDR2fKSkkeIPoGcP9/G0ED5B93nfe+skL4pDlm2xru/+pwYH8bPXHXjwgK3CbLkYNx8KKJ7PBzGWyRnCGuL48zSgGluSRcjdzLfr/WXk9pogF9WNFKlzal0flB1Ps2oYdWvofMMF95U0uzWrhZvfBNOXqauIp8OLT7pqOTRpy2phXhGxWaQZaYYTRNlonKOuA5iaq+cT8WrnQv2kO7ueDnFcZvV0nevnYIVD+vqiYZcYUHnRDcTIiFAb5ShqcIs0UCPlI6d+PbBg6NfPiUnR72JxJBEqcp3UQYxmEkohQoa6LL44A6kHspkCPoWBq7wN5giOALsjJV6wmbJ3aAxp2XvVCpdkqoVMD9aDaTFSGt28K7jWSygBRoBYIO2MRGymLLXnNo/pWIthEfyyErCmheJcT3zYOTywXn2FFAqbs40KxfKnR9L0POEquO/GWJ5NJkAFWzLnmiktsMZlVC4MZfFbg833SEkiWzEIrC6M0tOtFOgIQXYWG+/vr/1+F5eR5LKzZCNBUkwoZB0NxppaMtj8UtjC9SWJYcIMCIaKt/LFhxrB6gZbmKs19+rltKixnYniP6S9wwFpsAdS+w=
   on:
+    branch: master
+    node: 9
     tags: true
