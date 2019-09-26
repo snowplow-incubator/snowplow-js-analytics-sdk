@@ -11,6 +11,7 @@ install:
 script:
   - npm test
   - npm run lint
+  - npm run build
 
 after_script:
   - npm run codecov
