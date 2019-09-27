@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -10,20 +10,8 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-import { transform } from '../index';
 
-const unstruct = JSON.stringify({
-  schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-0',
-  data: {
-    schema: 'iglu:com.snowplowanalytics.snowplow/link_click/jsonschema/1-0-1',
-    data: {
-      targetUrl: 'http://www.example.com',
-      elementClasses: ['foreground'],
-      elementId: 'exampleLink',
-    },
-  },
-});
-const contexts = JSON.stringify({
+const contexts = {
   schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-0',
   data: [
     {
@@ -63,8 +51,9 @@ const contexts = JSON.stringify({
       },
     },
   ],
-});
-const derivedContexts = JSON.stringify({
+};
+
+const derivedContexts = {
   schema: 'iglu:com.snowplowanalytics.snowplow\/contexts\/jsonschema\/1-0-1',
   data: [{
     schema: 'iglu:com.snowplowanalytics.snowplow\/ua_parser_context\/jsonschema\/1-0-0',
@@ -81,11 +70,23 @@ const derivedContexts = JSON.stringify({
       osPatchMinor: null,
       osVersion: 'Windows XP',
       deviceFamily: 'Other',
-    },
+    } as any,
   }],
-});
-const event = {
-  contexts,
+};
+
+const unstructEvent = {
+  schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-0',
+  data: {
+    schema: 'iglu:com.snowplowanalytics.snowplow/link_click/jsonschema/1-0-1',
+    data: {
+      targetUrl: 'http://www.example.com',
+      elementClasses: ['foreground'],
+      elementId: 'exampleLink',
+    },
+  },
+};
+
+export const event = {
   app_id: 'angry-birds',
   platform: 'web',
   etl_tstamp: '2017-01-26 00:01:25.292',
@@ -138,12 +139,13 @@ const event = {
   mkt_term: '',
   mkt_content: '',
   mkt_campaign: '',
+  contexts: JSON.stringify(contexts),
   se_category: '',
   se_action: '',
   se_label: '',
   se_property: '',
   se_value: '',
-  unstruct_event: unstruct,
+  unstruct_event: JSON.stringify(unstructEvent),
   tr_orderid: '',
   tr_affiliation: '',
   tr_total: '',
@@ -207,7 +209,7 @@ const event = {
   dvce_sent_tstamp: '',
   refr_domain_userid: '',
   refr_device_tstamp: '',
-  derived_contexts: derivedContexts,
+  derived_contexts: JSON.stringify(derivedContexts),
   domain_sessionid: '2b15e5c8-d3b1-11e4-b9d6-1681e6b88ec1',
   derived_tstamp: '2013-11-26 00:03:57.886',
   event_vendor: 'com.snowplowanalytics.snowplow',
@@ -217,142 +219,3 @@ const event = {
   event_fingerprint: 'e3dbfa9cca0412c3d4052863cefb547f',
   true_tstamp: '2013-11-26 00:03:57.886',
 };
-const expected = {
-  geo_location: '37.443604,-122.4124',
-  app_id: 'angry-birds',
-  platform: 'web',
-  etl_tstamp: '2017-01-26T00:01:25.292Z',
-  collector_tstamp: '2013-11-26T00:02:05Z',
-  dvce_created_tstamp: '2013-11-26T00:03:57.885Z',
-  event: 'page_view',
-  event_id: 'c6ef3124-b53a-4b13-a233-0088f79dcbcb',
-  txn_id: 41828,
-  name_tracker: 'cloudfront-1',
-  v_tracker: 'js-2.1.0',
-  v_collector: 'clj-tomcat-0.1.0',
-  v_etl: 'serde-0.5.2',
-  user_id: 'jon.doe@email.com',
-  user_ipaddress: '92.231.54.234',
-  user_fingerprint: '2161814971',
-  domain_userid: 'bc2e92ec6c204a14',
-  domain_sessionidx: 3,
-  network_userid: 'ecdff4d0-9175-40ac-a8bb-325c49733607',
-  geo_country: 'US',
-  geo_region: 'TX',
-  geo_city: 'New York',
-  geo_zipcode: '94109',
-  geo_latitude: 37.443604,
-  geo_longitude: -122.4124,
-  geo_region_name: 'Florida',
-  ip_isp: 'FDN Communications',
-  ip_organization: 'Bouygues Telecom',
-  ip_domain: 'nuvox.net',
-  ip_netspeed: 'Cable/DSL',
-  page_url: 'http://www.snowplowanalytics.com',
-  page_title: 'On Analytics',
-  page_urlscheme: 'http',
-  page_urlhost: 'www.snowplowanalytics.com',
-  page_urlport: 80,
-  page_urlpath: '/product/index.html',
-  page_urlquery: 'id=GTM-DLRG',
-  page_urlfragment: '4-conclusion',
-  contexts_org_schema_web_page_1: [{
-    genre: 'blog',
-    inLanguage: 'en-US',
-    datePublished: '2014-11-06T00:00:00Z',
-    author: 'Fred Blundun',
-    breadcrumb: ['blog', 'releases'],
-    keywords: ['snowplow', 'javascript', 'tracker', 'event'],
-  }],
-  contexts_org_w3_performance_timing_1: [{
-    navigationStart: 1415358089861,
-    unloadEventStart: 1415358090270,
-    unloadEventEnd: 1415358090287,
-    redirectStart: 0,
-    redirectEnd: 0,
-    fetchStart: 1415358089870,
-    domainLookupStart: 1415358090102,
-    domainLookupEnd: 1415358090102,
-    connectStart: 1415358090103,
-    connectEnd: 1415358090183,
-    requestStart: 1415358090183,
-    responseStart: 1415358090265,
-    responseEnd: 1415358090265,
-    domLoading: 1415358090270,
-    domInteractive: 1415358090886,
-    domContentLoadedEventStart: 1415358090968,
-    domContentLoadedEventEnd: 1415358091309,
-    domComplete: 0,
-    loadEventStart: 0,
-    loadEventEnd: 0,
-  }],
-  unstruct_event_com_snowplowanalytics_snowplow_link_click_1: {
-    targetUrl: 'http://www.example.com',
-    elementClasses: ['foreground'],
-    elementId: 'exampleLink',
-  },
-  br_features_pdf: true,
-  br_features_flash: false,
-  contexts_com_snowplowanalytics_snowplow_ua_parser_context_1: [{
-    useragentFamily: 'IE',
-    useragentMajor: '7',
-    useragentMinor: '0',
-    useragentPatch: null,
-    useragentVersion: 'IE 7.0',
-    osFamily: 'Windows XP',
-    osMajor: null,
-    osMinor: null,
-    osPatch: null,
-    osPatchMinor: null,
-    osVersion: 'Windows XP',
-    deviceFamily: 'Other',
-  }],
-  domain_sessionid: '2b15e5c8-d3b1-11e4-b9d6-1681e6b88ec1',
-  derived_tstamp: '2013-11-26T00:03:57.886Z',
-  event_vendor: 'com.snowplowanalytics.snowplow',
-  event_name: 'link_click',
-  event_format: 'jsonschema',
-  event_version: '1-0-0',
-  event_fingerprint: 'e3dbfa9cca0412c3d4052863cefb547f',
-  true_tstamp: '2013-11-26T00:03:57.886Z',
-};
-
-function encode(event) {
-  return Object.keys(event)
-    .map(key => event[key])
-    .join('\t');
-}
-
-it('should be transformed', () => {
-  expect(transform(encode(event))).toEqual(expected);
-});
-
-it('should fail on fields number', () => {
-  expect(() => transform(encode({
-    a: '1',
-    b: '2',
-  }))).toThrow('Wrong event fields number.');
-});
-
-it('should fail on one field', () => {
-  expect(() => transform(encode(Object.assign({}, event, {
-    tr_tax_base: 'bad_tax_base',
-  })))).toThrow("Invalid value for field 'tr_tax_base'.");
-});
-
-it('should fail on multiple fields', () => {
-  expect(() => transform(encode(Object.assign({}, event, {
-    dvce_ismobile: 'bad_dvce_ismobile',
-    tr_tax_base: 'bad_tax_base',
-  })))).toThrow([
-    "Invalid value for field 'dvce_ismobile'.",
-    "Invalid value for field 'tr_tax_base'.",
-  ].join('\n'));
-});
-
-it('should not return geo_location', () => {
-  expect(() => transform(encode(Object.assign({}, event, {
-    geo_latitude: '',
-    geo_longitude: '',
-  })))).not.toHaveProperty('geo_location');
-});
