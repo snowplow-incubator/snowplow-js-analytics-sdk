@@ -11,7 +11,15 @@
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
 
-import { Boolean, Contexts, Double, Integer, String, Timestamp, Unstruct } from './types';
+import {
+  Boolean,
+  Contexts,
+  Double,
+  Integer,
+  String,
+  Timestamp,
+  Unstruct,
+} from './types';
 
 describe('String', () => {
   it('should parse string', () => {

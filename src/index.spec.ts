@@ -14,9 +14,9 @@
 import { transform } from './index';
 import { event } from './index.fixture';
 
-function encode(event: object) {
+function encode(event: object): string {
   return Object.keys(event)
-    .map(key => event[key])
+    .map((key) => event[key])
     .join('\t');
 }
 

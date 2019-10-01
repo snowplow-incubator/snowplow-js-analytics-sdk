@@ -39,6 +39,7 @@ export interface Event {
   geo_zipcode: string;
   geo_latitude: number;
   geo_longitude: number;
+  geo_location?: string;
   geo_region_name: string;
   ip_isp: string;
   ip_organization: string;
@@ -67,13 +68,13 @@ export interface Event {
   mkt_term: string;
   mkt_content: string;
   mkt_campaign: string;
-  contexts: any;
+  contexts: unknown;
   se_category: string;
   se_action: string;
   se_label: string;
-  se_property: any;
+  se_property: unknown;
   se_value: string;
-  unstruct_event: any;
+  unstruct_event: unknown;
   tr_orderid: string;
   tr_affiliation: string;
   tr_total: number;
@@ -137,7 +138,7 @@ export interface Event {
   dvce_sent_tstamp: number;
   refr_domain_userid: string;
   refr_device_tstamp: number;
-  derived_contexts: any;
+  derived_contexts: unknown;
   domain_sessionid: string;
   derived_tstamp: number;
   event_vendor: string;

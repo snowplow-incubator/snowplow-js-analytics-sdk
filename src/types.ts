@@ -11,17 +11,17 @@
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
 
-const SCHEMA_PATTERN = /.+:([a-zA-Z0-9_\.]+)\/([a-zA-Z0-9_\-]+)\/[^\/]+\/(.*)/;
+const SCHEMA_PATTERN = /.+:([a-zA-Z0-9_.]+)\/([a-zA-Z0-9_-]+)\/[^/]+\/(.*)/;
 
 interface Context {
   schema: string;
-  data: any;
+  data: unknown;
 }
 
 /**
  * Elasticsearch field.
  */
-export interface Field<Type = any> {
+export interface Field<Type = unknown> {
   key: string;
   value: Type;
 }
@@ -34,7 +34,7 @@ export interface Field<Type = any> {
  * @return Elasticsearch field name.
  */
 function fixSchema(prefix: string, schema: string): string {
-  const match = schema.match(SCHEMA_PATTERN);
+  const match = SCHEMA_PATTERN.exec(schema);
 
   if (!match) {
     throw new TypeError('Wrong schema format.');
@@ -72,7 +72,7 @@ export function Contexts(key: string, contexts: string): Field[] {
     );
 
   return Object.keys(distinctContexts)
-    .map(key => ({ key, value: distinctContexts[key] }));
+    .map((key) => ({ key, value: distinctContexts[key] }));
 }
 
 /**
@@ -84,7 +84,7 @@ export function Contexts(key: string, contexts: string): Field[] {
 export function Unstruct(key: string, unstruct: string): Field[] {
   const context = JSON.parse(unstruct).data as Context;
 
-  if (!context.hasOwnProperty('data')) {
+  if (!Object.prototype.hasOwnProperty.call(context, 'data')) {
     throw new TypeError('Could not extract inner data field from unstructured event.');
   }
 
@@ -123,7 +123,7 @@ export function Double(key: string, value: string): Field<number>[] {
  * @param value The field value - should be '0' or '1'.
  */
 export function Boolean(key: string, value: string): Field<boolean>[] {
-  if ('0' !== value && '1' !== value) {
+  if (value !== '0' && value !== '1') {
     throw new TypeError(`Invalid value for field '${key}'.`);
   }
 
