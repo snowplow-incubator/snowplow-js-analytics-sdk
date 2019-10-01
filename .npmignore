@@ -1,10 +1,10 @@
 /coverage
 /src
 .editorconfig
+.eslintrc
 .jsbeautifyrc
 .travis.yml
 babel.config.js
 rollup.config.js
 terser.json
 tsconfig.json
-tslint.json
