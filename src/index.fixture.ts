@@ -54,9 +54,9 @@ const contexts = {
 };
 
 const derivedContexts = {
-  schema: 'iglu:com.snowplowanalytics.snowplow\/contexts\/jsonschema\/1-0-1',
+  schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-1',
   data: [{
-    schema: 'iglu:com.snowplowanalytics.snowplow\/ua_parser_context\/jsonschema\/1-0-0',
+    schema: 'iglu:com.snowplowanalytics.snowplow/ua_parser_context/jsonschema/1-0-0',
     data: {
       useragentFamily: 'IE',
       useragentMajor: '7',
@@ -70,7 +70,7 @@ const derivedContexts = {
       osPatchMinor: null,
       osVersion: 'Windows XP',
       deviceFamily: 'Other',
-    } as any,
+    },
   }],
 };
 

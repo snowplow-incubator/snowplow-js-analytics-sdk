@@ -21,7 +21,7 @@ import { EVENT_STRUCTURE, LATITUDE_INDEX, LONGITUDE_INDEX } from './structure';
  * @param event Array of values for the event.
  * @return JSON for the event.
  */
-function jsonifyGoodEvent(event: string[]) {
+function jsonifyGoodEvent(event: string[]): Event {
   if (event.length !== Object.keys(EVENT_STRUCTURE).length) {
     throw new TypeError('Wrong event fields number.');
   }
@@ -52,7 +52,7 @@ function jsonifyGoodEvent(event: string[]) {
   }
 
   if (event[LATITUDE_INDEX] && event[LONGITUDE_INDEX]) {
-    output['geo_location'] = `${event[LATITUDE_INDEX]},${event[LONGITUDE_INDEX]}`;
+    output.geo_location = `${event[LATITUDE_INDEX]},${event[LONGITUDE_INDEX]}`;
   }
 
   return output;
@@ -64,6 +64,6 @@ function jsonifyGoodEvent(event: string[]) {
  * @param event Byte array representation of an enriched event string.
  * @return JSON for the event.
  */
-export function transform(event: string) {
+export function transform(event: string): Event {
   return jsonifyGoodEvent(event.split('\t'));
 }
