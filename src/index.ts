@@ -28,24 +28,18 @@ function jsonifyGoodEvent(event: string[]): Event {
 
   const errors = [] as string[];
   const output = Object.keys(EVENT_STRUCTURE)
-    .reduce(
-      (output, key, index) => {
-        if (event[index]) {
-          try {
-            output.push(...EVENT_STRUCTURE[key](key, event[index]));
-          } catch (e) {
-            errors.push(e.message);
-          }
+    .reduce((output, key, index) => {
+      if (event[index]) {
+        try {
+          output.push(...EVENT_STRUCTURE[key](key, event[index]));
+        } catch (e) {
+          errors.push(e.message);
         }
+      }
 
-        return output;
-      },
-      [] as Field[],
-    )
-    .reduce(
-      (output, { key, value }) => Object.assign(output, { [key]: value }),
-      {} as Event,
-    );
+      return output;
+    }, [] as Field[])
+    .reduce((output, { key, value }) => Object.assign(output, { [key]: value }), {} as Event);
 
   if (errors.length) {
     throw new TypeError(errors.join('\n'));

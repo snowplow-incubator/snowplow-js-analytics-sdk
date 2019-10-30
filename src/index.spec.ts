@@ -26,25 +26,30 @@ describe('transform', () => {
   });
 
   it('should fail on fields number', () => {
-    expect(() => transform(encode({ a: '1', b: '2' })))
-      .toThrow('Wrong event fields number.');
+    expect(() => transform(encode({ a: '1', b: '2' }))).toThrow('Wrong event fields number.');
   });
 
   it('should fail on one field', () => {
-    expect(() => transform(encode({ ...event, tr_tax_base: 'bad_tax_base' })))
-      .toThrow("Invalid value for field 'tr_tax_base'.");
+    expect(() => transform(encode({ ...event, tr_tax_base: 'bad_tax_base' }))).toThrow(
+      "Invalid value for field 'tr_tax_base'.",
+    );
   });
 
   it('should fail on multiple fields', () => {
-    expect(() => transform(encode({ ...event, dvce_ismobile: 'bad_dvce_ismobile', tr_tax_base: 'bad_tax_base' })))
-      .toThrow([
-        "Invalid value for field 'dvce_ismobile'.",
-        "Invalid value for field 'tr_tax_base'.",
-      ].join('\n'));
+    expect(() =>
+      transform(
+        encode({
+          ...event,
+          dvce_ismobile: 'bad_dvce_ismobile',
+          tr_tax_base: 'bad_tax_base',
+        }),
+      ),
+    ).toThrow(["Invalid value for field 'dvce_ismobile'.", "Invalid value for field 'tr_tax_base'."].join('\n'));
   });
 
   it('should not return geo_location', () => {
-    expect(() => transform(encode({ ...event, geo_latitude: '', geo_longitude: '' })))
-      .not.toHaveProperty('geo_location');
+    expect(() => transform(encode({ ...event, geo_latitude: '', geo_longitude: '' }))).not.toHaveProperty(
+      'geo_location',
+    );
   });
 });
