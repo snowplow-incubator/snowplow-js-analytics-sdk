@@ -1,3 +1,13 @@
+Version 0.2.0 (2019-10-30)
+--------------------------
+- Add ECMAScript Modules support.
+- Upgrade dependencies.
+- Migrate to the automated builds.
+- Migrate to eslint.
+- Migrate to prettier.
+- Migrate to rollup.
+- Migrate to the Airbnb style guide.
+
 Version 0.1.0 (2018-07-31)
 --------------------------
 Initial release
