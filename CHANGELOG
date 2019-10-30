@@ -1,3 +1,17 @@
+Version 0.2.0 (2019-10-30)
+--------------------------
+- Upgrade development dependencies.
+- Migrate to rollup.
+- Add ECMAScript Modules support.
+- Migrate to the Airbnb style guide.
+- Add code linting as a build step.
+- Migrate to the automated builds.
+- Refactor unit-tests.
+- Remove non-LTS Node.js versions from Travis CI configuration.
+- Enable TypeScript strict mode.
+- Migrate to eslint.
+- Migrate to prettier.
+
 Version 0.1.0 (2018-07-31)
 --------------------------
 Initial release
