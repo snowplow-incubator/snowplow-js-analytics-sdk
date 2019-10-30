@@ -55,24 +55,22 @@ function fixSchema(prefix: string, schema: string): string {
  * @return List of validated tuples containing a fixed schema string and the original data Object.
  */
 export function Contexts(key: string, contexts: string): Field[] {
-  const distinctContexts = (JSON.parse(contexts).data as Context[])
-    .reduce(
-      (contexts, context) => {
-        const schema = fixSchema('contexts', context.schema);
+  const distinctContexts = (JSON.parse(contexts).data as Context[]).reduce((contexts, context) => {
+    const schema = fixSchema('contexts', context.schema);
 
-        if (!contexts[schema]) {
-          contexts[schema] = [];
-        }
+    if (!contexts[schema]) {
+      contexts[schema] = [];
+    }
 
-        contexts[schema].push(context.data);
+    contexts[schema].push(context.data);
 
-        return contexts;
-      },
-      {},
-    );
+    return contexts;
+  }, {});
 
-  return Object.keys(distinctContexts)
-    .map((key) => ({ key, value: distinctContexts[key] }));
+  return Object.keys(distinctContexts).map((key) => ({
+    key,
+    value: distinctContexts[key],
+  }));
 }
 
 /**
@@ -88,10 +86,12 @@ export function Unstruct(key: string, unstruct: string): Field[] {
     throw new TypeError('Could not extract inner data field from unstructured event.');
   }
 
-  return [{
-    key: fixSchema('unstruct_event', context.schema),
-    value: context.data,
-  }];
+  return [
+    {
+      key: fixSchema('unstruct_event', context.schema),
+      value: context.data,
+    },
+  ];
 }
 
 export function String(key: string, value: string): Field<string>[] {
