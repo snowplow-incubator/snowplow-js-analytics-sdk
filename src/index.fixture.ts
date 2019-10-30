@@ -55,23 +55,25 @@ const contexts = {
 
 const derivedContexts = {
   schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-1',
-  data: [{
-    schema: 'iglu:com.snowplowanalytics.snowplow/ua_parser_context/jsonschema/1-0-0',
-    data: {
-      useragentFamily: 'IE',
-      useragentMajor: '7',
-      useragentMinor: '0',
-      useragentPatch: null,
-      useragentVersion: 'IE 7.0',
-      osFamily: 'Windows XP',
-      osMajor: null,
-      osMinor: null,
-      osPatch: null,
-      osPatchMinor: null,
-      osVersion: 'Windows XP',
-      deviceFamily: 'Other',
+  data: [
+    {
+      schema: 'iglu:com.snowplowanalytics.snowplow/ua_parser_context/jsonschema/1-0-0',
+      data: {
+        useragentFamily: 'IE',
+        useragentMajor: '7',
+        useragentMinor: '0',
+        useragentPatch: null,
+        useragentVersion: 'IE 7.0',
+        osFamily: 'Windows XP',
+        osMajor: null,
+        osMinor: null,
+        osPatch: null,
+        osPatchMinor: null,
+        osVersion: 'Windows XP',
+        deviceFamily: 'Other',
+      },
     },
-  }],
+  ],
 };
 
 const unstructEvent = {

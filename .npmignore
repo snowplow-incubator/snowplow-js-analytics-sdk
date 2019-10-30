@@ -2,7 +2,7 @@
 /src
 .editorconfig
 .eslintrc
-.jsbeautifyrc
+.prettierrc
 .travis.yml
 babel.config.js
 rollup.config.js
