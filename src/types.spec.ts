@@ -11,15 +11,7 @@
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
 
-import {
-  Boolean,
-  Contexts,
-  Double,
-  Integer,
-  String,
-  Timestamp,
-  Unstruct,
-} from './types';
+import { Boolean, Contexts, Double, Integer, String, Timestamp, Unstruct } from './types';
 
 describe('String', () => {
   it('should parse string', () => {
@@ -69,35 +61,35 @@ describe('Timestamp', () => {
 
 describe('Contexts', () => {
   it('should parse contexts', () => {
-    expect(Contexts('', JSON.stringify({
-      data: [
-        {
-          data: { unique: true },
-          schema: 'iglu:com.acme/unduplicated/jsonschema/1-0-0',
-        },
-        {
-          data: { value: 1 },
-          schema: 'iglu:com.acme/duplicated/jsonschema/1-0-0',
-        },
-        {
-          data: { value: 2 },
-          schema: 'iglu:com.acme/duplicated/jsonschema/1-0-0',
-        },
-      ],
-      schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-0',
-    }))).toEqual([
+    expect(
+      Contexts(
+        '',
+        JSON.stringify({
+          data: [
+            {
+              data: { unique: true },
+              schema: 'iglu:com.acme/unduplicated/jsonschema/1-0-0',
+            },
+            {
+              data: { value: 1 },
+              schema: 'iglu:com.acme/duplicated/jsonschema/1-0-0',
+            },
+            {
+              data: { value: 2 },
+              schema: 'iglu:com.acme/duplicated/jsonschema/1-0-0',
+            },
+          ],
+          schema: 'iglu:com.snowplowanalytics.snowplow/contexts/jsonschema/1-0-0',
+        }),
+      ),
+    ).toEqual([
       {
         key: 'contexts_com_acme_unduplicated_1',
-        value: [
-          { unique: true },
-        ],
+        value: [{ unique: true }],
       },
       {
         key: 'contexts_com_acme_duplicated_1',
-        value: [
-          { value: 1 },
-          { value: 2 },
-        ],
+        value: [{ value: 1 }, { value: 2 }],
       },
     ]);
   });
@@ -105,32 +97,49 @@ describe('Contexts', () => {
 
 describe('Unstruct', () => {
   it('should parse unstruct', () => {
-    expect(Unstruct('', JSON.stringify({
-      data: {
-        data: { key: 'value' },
-        schema: 'iglu:com.snowplowanalytics.snowplow/link_click/jsonschema/1-0-1',
+    expect(
+      Unstruct(
+        '',
+        JSON.stringify({
+          data: {
+            data: { key: 'value' },
+            schema: 'iglu:com.snowplowanalytics.snowplow/link_click/jsonschema/1-0-1',
+          },
+          schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
+        }),
+      ),
+    ).toEqual([
+      {
+        key: 'unstruct_event_com_snowplowanalytics_snowplow_link_click_1',
+        value: { key: 'value' },
       },
-      schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
-    }))).toEqual([{
-      key: 'unstruct_event_com_snowplowanalytics_snowplow_link_click_1',
-      value: { key: 'value' },
-    }]);
+    ]);
   });
 
   it('should throw an error on missing data', () => {
-    expect(() => Unstruct('', JSON.stringify({
-      schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
-      data: {},
-    }))).toThrow();
+    expect(() =>
+      Unstruct(
+        '',
+        JSON.stringify({
+          schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
+          data: {},
+        }),
+      ),
+    ).toThrow();
   });
 
   it('should throw an error on invalid schema', () => {
-    expect(() => Unstruct('', JSON.stringify({
-      data: {
-        data: { key: 'value' },
-        schema: 'something',
-      },
-      schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
-    }))).toThrow();
+    expect(() =>
+      Unstruct(
+        '',
+        JSON.stringify({
+          data: {
+            data: { key: 'value' },
+            schema: 'something',
+          },
+          schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
+        }),
+      ),
+    ).toThrow();
   });
 });
