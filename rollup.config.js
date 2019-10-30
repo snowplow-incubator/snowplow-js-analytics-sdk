@@ -12,7 +12,6 @@
  */
 
 import babel from 'rollup-plugin-babel';
-import dts from 'rollup-plugin-dts';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 import terserOptions from './terser.json';
@@ -35,21 +34,14 @@ export default [
       },
     ],
     plugins: [
-      typescript({ cacheRoot: './node_modules/.cache/rpt2' }),
+      typescript({
+        cacheRoot: './node_modules/.cache/rpt2',
+        compilerOptions: {
+          declaration: false,
+        },
+      }),
       babel({ extensions: ['.ts'] }),
-      terser(terserOptions)
-    ],
-  },
-
-  {
-    input: 'src/index.ts',
-    output: [{
-      file: 'dist/index.es6.mjs',
-      format: 'esm',
-    }],
-    plugins: [
-      typescript({ cacheRoot: './node_modules/.cache/rpt2' }),
-      terser(terserOptions)
+      terser(terserOptions),
     ],
   },
 
@@ -57,10 +49,18 @@ export default [
     input: 'src/index.ts',
     output: [
       {
-        file: 'dist/index.d.ts',
-        format: 'es',
+        file: 'dist/index.es6.mjs',
+        format: 'esm',
       },
     ],
-    plugins: [ dts() ],
+    plugins: [
+      typescript({
+        cacheRoot: './node_modules/.cache/rpt2',
+        tsconfigOverride: {
+          useTsconfigDeclarationDir: true,
+        },
+      }),
+      terser(terserOptions),
+    ],
   },
 ];
