@@ -11,7 +11,7 @@
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
 
-const SCHEMA_PATTERN = /.+:([a-zA-Z0-9_.]+)\/([a-zA-Z0-9_-]+)\/[^/]+\/(.*)/;
+const SCHEMA_PATTERN = /.+:([a-zA-Z0-9_.-]+)\/([a-zA-Z0-9_-]+)\/[^/]+\/(.*)/;
 
 interface Context {
   schema: string;
@@ -41,7 +41,7 @@ function fixSchema(prefix: string, schema: string): string {
   }
 
   const [, organization, name, version] = match;
-  const snakeCaseOrganization = organization.replace(/\./g, '_').toLowerCase();
+  const snakeCaseOrganization = organization.replace(/[.-]/g, '_').toLowerCase();
   const snakeCaseName = name.replace(/([^A-Z_])([A-Z])/g, '$1_$2').toLowerCase();
   const [model] = version.split('-');
 
