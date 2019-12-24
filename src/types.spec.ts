@@ -96,6 +96,26 @@ describe('Contexts', () => {
 });
 
 describe('Unstruct', () => {
+  it('should support dashes in a schema organization name', () => {
+    expect(
+      Unstruct(
+        '',
+        JSON.stringify({
+          data: {
+            data: 'something',
+            schema: 'iglu:com.google.analytics.enhanced-ecommerce/productFieldObject/jsonschema/1-0-0',
+          },
+          schema: 'iglu:com.snowplowanalytics.snowplow/unstruct_event/jsonschema/1-0-0',
+        }),
+      ),
+    ).toEqual([
+      {
+        key: 'unstruct_event_com_google_analytics_enhanced_ecommerce_product_field_object_1',
+        value: 'something',
+      },
+    ]);
+  });
+
   it('should parse unstruct', () => {
     expect(
       Unstruct(
