@@ -137,7 +137,7 @@ export const EVENT_STRUCTURE = {
   etl_tags: String,
   dvce_sent_tstamp: Timestamp,
   refr_domain_userid: String,
-  refr_device_tstamp: Timestamp,
+  refr_dvce_tstamp: Timestamp,
   derived_contexts: Contexts,
   domain_sessionid: String,
   derived_tstamp: Timestamp,
