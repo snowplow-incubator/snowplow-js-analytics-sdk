@@ -210,7 +210,7 @@ export const event = {
   etl_tags: '',
   dvce_sent_tstamp: '',
   refr_domain_userid: '',
-  refr_device_tstamp: '',
+  refr_dvce_tstamp: '',
   derived_contexts: JSON.stringify(derivedContexts),
   domain_sessionid: '2b15e5c8-d3b1-11e4-b9d6-1681e6b88ec1',
   derived_tstamp: '2013-11-26 00:03:57.886',

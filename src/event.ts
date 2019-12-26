@@ -137,7 +137,7 @@ export interface Event {
   etl_tags: string;
   dvce_sent_tstamp: number;
   refr_domain_userid: string;
-  refr_device_tstamp: number;
+  refr_dvce_tstamp: number;
   derived_contexts: unknown;
   domain_sessionid: string;
   derived_tstamp: number;
