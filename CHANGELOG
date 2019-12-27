@@ -1,3 +1,8 @@
+Version 0.3.0 (2020-01-08)
+--------------------------
+- Add dashes support in the schema organization name.
+- Rename `refr_device_tstamp` to `refr_dvce_tstamp`.
+
 Version 0.2.0 (2019-10-30)
 --------------------------
 - Upgrade development dependencies.
