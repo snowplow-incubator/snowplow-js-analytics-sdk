@@ -16,6 +16,9 @@
   "bugs": {
     "url": "https://github.com/snowplow-incubator/snowplow-js-analytics-sdk/issues"
   },
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "es2015": "dist/index.es6.mjs",
