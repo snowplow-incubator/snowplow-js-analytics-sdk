@@ -31,9 +31,9 @@ function jsonifyGoodEvent(event: string[]): Event {
     .reduce((fields, key, index) => {
       if (event[index]) {
         try {
-          fields.push(...EVENT_STRUCTURE[key](key, event[index]));
-        } catch (e) {
-          errors.push(e.message);
+          fields.push(...EVENT_STRUCTURE[key as keyof typeof EVENT_STRUCTURE](key, event[index]));
+        } catch (error) {
+          errors.push((error as Error).message);
         }
       }
 

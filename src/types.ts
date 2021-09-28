@@ -66,7 +66,7 @@ export function Contexts(key: string, contexts: string): Field[] {
     result[schema].push(context.data);
 
     return result;
-  }, {});
+  }, {} as Record<string, unknown[]>);
 
   // eslint-disable-next-line no-shadow
   return Object.entries(distinctContexts).map(([key, value]) => ({ key, value }));
