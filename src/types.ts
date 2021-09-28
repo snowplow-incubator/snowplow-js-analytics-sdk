@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2018-2021 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -55,22 +55,21 @@ function fixSchema(prefix: string, schema: string): string {
  * @return List of validated tuples containing a fixed schema string and the original data Object.
  */
 export function Contexts(key: string, contexts: string): Field[] {
-  const distinctContexts = (JSON.parse(contexts).data as Context[]).reduce((contexts, context) => {
+  const distinctContexts = (JSON.parse(contexts).data as Context[]).reduce((result, context) => {
     const schema = fixSchema('contexts', context.schema);
 
-    if (!contexts[schema]) {
-      contexts[schema] = [];
+    if (!result[schema]) {
+      // eslint-disable-next-line no-param-reassign
+      result[schema] = [];
     }
 
-    contexts[schema].push(context.data);
+    result[schema].push(context.data);
 
-    return contexts;
+    return result;
   }, {});
 
-  return Object.keys(distinctContexts).map((key) => ({
-    key,
-    value: distinctContexts[key],
-  }));
+  // eslint-disable-next-line no-shadow
+  return Object.entries(distinctContexts).map(([key, value]) => ({ key, value }));
 }
 
 /**

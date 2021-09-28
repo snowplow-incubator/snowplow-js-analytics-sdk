@@ -21,7 +21,7 @@ In your `app.js`:
 ```javascript
 const { transform } = require('snowplow-analytics-sdk');
 
-module.exports.handler = input => {
+module.exports.handler = (input) => {
   let event = transform(
     new Buffer(input.Records[0].kinesis.data, 'base64').toString('utf8'),
   );
@@ -58,7 +58,7 @@ Returns decoded [Snowplow enriched event](https://github.com/snowplow/snowplow/w
 
 ## Copyright and license
 
-The Snowplow Scala Analytics SDK is copyright 2018-2018 dokmic, Snowplow Analytics Ltd.
+The Snowplow Scala Analytics SDK is copyright 2018-2021 dokmic, Snowplow Analytics Ltd.
 
 Licensed under the **[Apache License, Version 2.0][license]** (the "License");
 you may not use this software except in compliance with the License.

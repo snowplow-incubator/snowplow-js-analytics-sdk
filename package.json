@@ -36,21 +36,72 @@
     "@babel/core": "^7.0",
     "@babel/preset-env": "^7.0",
     "@types/jest": "^24.0",
-    "@typescript-eslint/eslint-plugin": "^2.0",
-    "@typescript-eslint/parser": "^2.0",
-    "eslint": "^6.0",
-    "eslint-config-airbnb-base": "^14.0",
-    "eslint-config-prettier": "^6.0",
-    "eslint-plugin-import": "^2.0",
-    "eslint-plugin-prettier": "^3.0",
+    "@typescript-eslint/eslint-plugin": "^5.0",
+    "@typescript-eslint/parser": "^5.0",
+    "eslint": "^7.32",
+    "eslint-config-airbnb": "^18.2",
+    "eslint-config-prettier": "^8.3",
+    "eslint-import-resolver-typescript": "^2.5",
+    "eslint-plugin-import": "^2.25",
+    "eslint-plugin-prettier": "^4.0",
     "jest": "^24.0",
-    "prettier": "^1.0",
+    "prettier": "^2.4",
     "rollup": "^1.23",
     "rollup-plugin-babel": "^4.0",
     "rollup-plugin-terser": "^5.0",
     "rollup-plugin-typescript2": "^0.24",
     "ts-jest": "^24.0",
     "typescript": "^3.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "airbnb/base",
+      "prettier"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "extends": [
+          "plugin:@typescript-eslint/eslint-recommended",
+          "plugin:@typescript-eslint/recommended"
+        ],
+        "parser": "@typescript-eslint/parser",
+        "plugins": [
+          "@typescript-eslint"
+        ]
+      }
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "ts": "never"
+        }
+      ],
+      "import/prefer-default-export": "off",
+      "prettier/prettier": [
+        "warn",
+        {
+          "arrowParens": "always",
+          "printWidth": 120,
+          "singleQuote": true,
+          "trailingComma": "all"
+        }
+      ]
+    },
+    "settings": {
+      "import/resolver": {
+        "eslint-import-resolver-typescript": true
+      }
+    }
   },
   "jest": {
     "preset": "ts-jest"

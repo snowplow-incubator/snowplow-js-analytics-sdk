@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2018-2021 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -14,23 +14,23 @@
 import { transform } from './index';
 import { event } from './index.fixture';
 
-function encode(event: object): string {
-  return Object.keys(event)
-    .map((key) => event[key])
+function serialize(data: Record<string, unknown>): string {
+  return Object.keys(data)
+    .map((key) => data[key])
     .join('\t');
 }
 
 describe('transform', () => {
   it('should be transformed', () => {
-    expect(transform(encode(event))).toMatchSnapshot();
+    expect(transform(serialize(event))).toMatchSnapshot();
   });
 
   it('should fail on fields number', () => {
-    expect(() => transform(encode({ a: '1', b: '2' }))).toThrow('Wrong event fields number.');
+    expect(() => transform(serialize({ a: '1', b: '2' }))).toThrow('Wrong event fields number.');
   });
 
   it('should fail on one field', () => {
-    expect(() => transform(encode({ ...event, tr_tax_base: 'bad_tax_base' }))).toThrow(
+    expect(() => transform(serialize({ ...event, tr_tax_base: 'bad_tax_base' }))).toThrow(
       "Invalid value for field 'tr_tax_base'.",
     );
   });
@@ -38,7 +38,7 @@ describe('transform', () => {
   it('should fail on multiple fields', () => {
     expect(() =>
       transform(
-        encode({
+        serialize({
           ...event,
           dvce_ismobile: 'bad_dvce_ismobile',
           tr_tax_base: 'bad_tax_base',
@@ -48,7 +48,7 @@ describe('transform', () => {
   });
 
   it('should not return geo_location', () => {
-    expect(() => transform(encode({ ...event, geo_latitude: '', geo_longitude: '' }))).not.toHaveProperty(
+    expect(() => transform(serialize({ ...event, geo_latitude: '', geo_longitude: '' }))).not.toHaveProperty(
       'geo_location',
     );
   });

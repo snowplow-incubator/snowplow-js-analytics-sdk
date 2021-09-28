@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2018-2021 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -28,18 +28,18 @@ function jsonifyGoodEvent(event: string[]): Event {
 
   const errors = [] as string[];
   const output = Object.keys(EVENT_STRUCTURE)
-    .reduce((output, key, index) => {
+    .reduce((fields, key, index) => {
       if (event[index]) {
         try {
-          output.push(...EVENT_STRUCTURE[key](key, event[index]));
+          fields.push(...EVENT_STRUCTURE[key](key, event[index]));
         } catch (e) {
           errors.push(e.message);
         }
       }
 
-      return output;
+      return fields;
     }, [] as Field[])
-    .reduce((output, { key, value }) => Object.assign(output, { [key]: value }), {} as Event);
+    .reduce((result, { key, value }) => Object.assign(result, { [key]: value }), {} as Event);
 
   if (errors.length) {
     throw new TypeError(errors.join('\n'));
