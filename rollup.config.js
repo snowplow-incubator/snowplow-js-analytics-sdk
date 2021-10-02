@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 dokmic, Snowplow Analytics Ltd. All rights reserved.
+ * Copyright (c) 2019-2021 dokmic, Snowplow Analytics Ltd. All rights reserved.
  *
  * This program is licensed to you under the Apache License Version 2.0,
  * and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -11,56 +11,46 @@
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
 
-import babel from 'rollup-plugin-babel';
-import { terser } from 'rollup-plugin-terser';
+import dts from 'rollup-plugin-dts';
 import typescript from 'rollup-plugin-typescript2';
-import terserOptions from './terser.json';
 
 export default [
   {
     input: 'src/index.ts',
     output: [
       {
+        dir: 'dist',
+        entryFileNames: '[name].js',
         exports: 'named',
-        file: 'dist/index.js',
         format: 'umd',
         name: 'SnowplowAnalyticsSdk',
         sourcemap: true,
         sourcemapExcludeSources: true,
       },
       {
-        file: 'dist/index.mjs',
+        dir: 'dist',
+        entryFileNames: '[name].mjs',
         format: 'esm',
       },
     ],
     plugins: [
       typescript({
-        cacheRoot: './node_modules/.cache/rpt2',
-        compilerOptions: {
-          declaration: false,
+        clean: true,
+        tsconfigOverride: {
+          compilerOptions: { removeComments: true },
         },
       }),
-      babel({ extensions: ['.ts'] }),
-      terser(terserOptions),
     ],
   },
-
   {
     input: 'src/index.ts',
     output: [
       {
-        file: 'dist/index.es6.mjs',
+        dir: 'dist',
+        entryFileNames: '[name].d.ts',
         format: 'esm',
       },
     ],
-    plugins: [
-      typescript({
-        cacheRoot: './node_modules/.cache/rpt2',
-        tsconfigOverride: {
-          useTsconfigDeclarationDir: true,
-        },
-      }),
-      terser(terserOptions),
-    ],
+    plugins: [dts()],
   },
 ];
