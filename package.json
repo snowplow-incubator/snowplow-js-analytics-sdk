@@ -22,7 +22,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "codecov": "codecov",
+    "coverage": "codecov",
     "lint": "eslint --ext .ts src/",
     "test": "jest"
   },
