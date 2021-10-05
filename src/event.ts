@@ -17,9 +17,9 @@
 export interface Event {
   app_id: string;
   platform: string;
-  etl_tstamp: number;
-  collector_tstamp: number;
-  dvce_created_tstamp: number;
+  etl_tstamp: string;
+  collector_tstamp: string;
+  dvce_created_tstamp: string;
   event: string;
   event_id: string;
   txn_id: number;
@@ -135,16 +135,16 @@ export interface Event {
   mkt_clickid: string;
   mkt_network: string;
   etl_tags: string;
-  dvce_sent_tstamp: number;
+  dvce_sent_tstamp: string;
   refr_domain_userid: string;
-  refr_dvce_tstamp: number;
+  refr_dvce_tstamp: string;
   derived_contexts: unknown;
   domain_sessionid: string;
-  derived_tstamp: number;
+  derived_tstamp: string;
   event_vendor: string;
   event_name: string;
   event_format: string;
   event_version: string;
   event_fingerprint: string;
-  true_tstamp: number;
+  true_tstamp: string;
 }
