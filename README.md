@@ -1,7 +1,7 @@
 # Snowplow JavaScript and TypeScript Analytics SDK
 
 [![NPM](https://img.shields.io/npm/v/snowplow-analytics-sdk.svg)](https://www.npmjs.com/package/snowplow-analytics-sdk)
-[![Build Status](https://github.com/snowplow-incubator/snowplow-js-analytics-sdk/actions/workflows/main.yaml/badge.svg?branch=master)](https://github.com/snowplow-incubator/snowplow-js-analytics-sdk/actions/workflows/main.yaml)
+[![Tests](https://github.com/snowplow-incubator/snowplow-js-analytics-sdk/actions/workflows/tests.yaml/badge.svg?branch=master)](https://github.com/snowplow-incubator/snowplow-js-analytics-sdk/actions/workflows/tests.yaml)
 [![Code Coverage](https://codecov.io/gh/snowplow-incubator/snowplow-js-analytics-sdk/badge.svg?branch=master)](https://codecov.io/gh/snowplow-incubator/snowplow-js-analytics-sdk?branch=master)
 [![License][license-image]][license]
 
