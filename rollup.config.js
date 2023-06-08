@@ -43,7 +43,7 @@ export default [
     ],
   },
   {
-    input: 'src/index.ts',
+    input: ['src/index.ts', 'src/event.ts'],
     output: [
       {
         dir: 'dist',
