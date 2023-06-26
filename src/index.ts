@@ -62,7 +62,4 @@ export function transform(event: string): Event {
   return jsonifyGoodEvent(event.split('\t'));
 }
 
-/**
- * Snowplow Good Event.
- */
 export type { Event } from './event';
