@@ -61,3 +61,5 @@ function jsonifyGoodEvent(event: string[]): Event {
 export function transform(event: string): Event {
   return jsonifyGoodEvent(event.split('\t'));
 }
+
+export type { Event } from './event';
