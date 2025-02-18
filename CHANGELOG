@@ -1,3 +1,7 @@
+Version 0.4.0 (2025-02-18)
+--------------------------
+- Normalize LICENSE headers across the repository (#39)
+
 Version 0.3.1 (2021-10-10)
 --------------------------
 - Fix timestamp fields types.
