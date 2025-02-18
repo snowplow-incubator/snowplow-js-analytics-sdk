@@ -11,6 +11,10 @@ Currently, the JavaScript Analytics SDK provides the [JSON Event Transformer](ht
 
 You can find more information about Snowplow Analytics SDKs in general on [Snowplow Wiki](https://github.com/snowplow/snowplow/wiki/Snowplow-Analytics-SDK).
 
+## Source acknowledgement
+
+This SDK was contributed by [Michael Dokolin](https://github.com/dokmic) in 2018 - big thanks for the help in getting this one started and maintaining it over the years!
+
 ## Install
 ```bash
 npm install --save snowplow-analytics-sdk
@@ -58,7 +62,7 @@ Returns decoded [Snowplow enriched event](https://github.com/snowplow/snowplow/w
 
 ## Copyright and license
 
-The Snowplow Scala Analytics SDK is copyright 2018-2021 dokmic, Snowplow Analytics Ltd.
+The Snowplow JS Analytics SDK is copyright 2018-current Snowplow Analytics Ltd.
 
 Licensed under the **[Apache License, Version 2.0][license]** (the "License");
 you may not use this software except in compliance with the License.
